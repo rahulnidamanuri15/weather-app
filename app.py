@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import requests
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
@@ -13,10 +15,14 @@ class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
 
+load_dotenv()
+
 @app.route("/", methods=["GET", "POST"])
 def hello_world():
+  
     if request.method == "POST":
         city_name = request.form.get("city")
+        city_name = city_name.strip().title()
 
         if city_name:
             existing_city = City.query.filter_by(name=city_name).first()
@@ -25,10 +31,11 @@ def hello_world():
                 db.session.add(new_city)
                 db.session.commit()
 
-    url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid=edae26e708808e0debd8123af6c6b546"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={{}}&appid={os.getenv('api_key')}"
 
     cities = City.query.all()
     weather_data = []
+    
 
     for city in cities:
         r = requests.get(url.format(city.name)).json()
