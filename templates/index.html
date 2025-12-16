@@ -3,11 +3,7 @@
 {% block body %}
 <div class="container mt-4">
     <form class="d-flex mb-4" action="/" method="post">
-        <input class="form-control me-2"
-               type="search"
-               name="city"
-               placeholder="Search by City"
-               required>
+        <input class="form-control me-2" type="search" name="city" placeholder="Search by City ( Enter Correct Spelling of City )" required>
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
@@ -17,14 +13,19 @@
             <div class="card h-100 shadow-sm">
                 <div class="row g-0 align-items-center">
                     <div class="col-4 text-center">
-                        <img src="https://openweathermap.org/img/wn/{{ w.icon }}@2x.png"
-                             alt="Weather Icon">
+                        <img src="https://openweathermap.org/img/wn/{{ w.icon }}@2x.png" alt="Weather Icon">
                     </div>
                     <div class="col-8">
                         <div class="card-body">
                             <h5 class="card-title">{{ w.city }}</h5>
                             <p class="mb-1">{{ w.temperature }} °C</p>
                             <p class="text-muted mb-0">{{ w.description }}</p>
+                            <form action="/delete/{{w.id}}" method="post" style="margin-top: 10px;">
+
+                                <button type="submit" class="btn btn-outline-dark btn-sm">Delete</button>
+
+                            </form>
+
                         </div>
                     </div>
                 </div>
