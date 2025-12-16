@@ -31,7 +31,7 @@ def hello_world():
                 db.session.add(new_city)
                 db.session.commit()
 
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={{}}&appid={os.getenv('api_key')}"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={{}}&appid={os.getenv('API_KEY')}"
 
     cities = City.query.all()
     weather_data = []
